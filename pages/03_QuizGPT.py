@@ -5,6 +5,9 @@ from langchain.text_splitter import CharacterTextSplitter
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 from langchain.callbacks import StreamingStdOutCallbackHandler
+from langchain.embeddings import CacheBackedEmbeddings, OpenAIEmbeddings
+from langchain.storage import LocalFileStore
+from langchain.vectorstores.faiss import FAISS
 import streamlit as st
 from langchain.retrievers import WikipediaRetriever
 from langchain.schema import BaseOutputParser, output_parser
@@ -240,6 +243,8 @@ def split_file(file):
     os.makedirs(f"./.cache/quiz_files/", exist_ok=True)
     with open(file_path, "wb") as f:
         f.write(file_content)
+    os.makedirs(f"./.cache/embeddings", exist_ok=True)
+    cache_dir = LocalFileStore(f"./.cache/embeddings/{file.name}")
     splitter = CharacterTextSplitter.from_tiktoken_encoder(
         separator="\n",
         chunk_size=600,
@@ -247,7 +252,11 @@ def split_file(file):
     )
     loader = UnstructuredFileLoader(file_path)
     docs = loader.load_and_split(text_splitter=splitter)
-    return docs
+    embeddings = OpenAIEmbeddings(api_key=api_key)
+    cached_embeddings = CacheBackedEmbeddings.from_bytes_store(embeddings, cache_dir)
+    vectorstore = FAISS.from_documents(docs, cached_embeddings)
+    retriever = vectorstore.as_retriever()
+    return retriever
 
 
 @st.cache_data(show_spinner="Making quiz...")
