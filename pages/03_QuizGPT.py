@@ -33,55 +33,29 @@ st.set_page_config(
 
 st.title("QuizGPT")
 
+api_key = st.session_state.get("api_key", "")
+
 with st.sidebar:
-    if "api_key" not in st.session_state:
-        st.session_state["api_key"] = ""
+    api_key = st.text_input("OpenAI_API_key", type="password")
+    st.session_state["api_key"] = api_key
+    if api_key:
+        st.caption("API key is set.")
+    else:
+        st.caption("Please enter your API key ⬆️.")
 
-    api_key_input = st.empty()
-
-    def reset_api_key():
-        st.session_state["api_key"] = ""
-        print(st.session_state["api_key"])
- 
-    api_key = st.sidebar.text_input(
-        "Put your OpenAI API Key here",
-        value=st.session_state["api_key"],
-        key="api_key_input",
-    )
-    if api_key != st.session_state["api_key"]:
-        st.session_state["api_key"] = api_key
-        st.rerun()
-
-memory_llm = None
-
-llm = ChatOpenAI(
-    temperature=0.1,
-    model="gpt-3.5-turbo-0125",
-    openai_api_key=api_key,
-    streaming=True,
-    callbacks=[StreamingStdOutCallbackHandler()],
-   )
-
-memory_llm = ChatOpenAI(
-        temperature=0.1,
-        openai_api_key=api_key,
-    )
-
-if api_key:
+if api_key == "":
+    st.error("Please enter your OpenAI API key")
+    st.stop()
+else:
     llm = ChatOpenAI(
         temperature=0.1,
-        openai_api_key=api_key,
+        model="gpt-3.5-turbo-0125",
         streaming=True,
         callbacks=[
             StreamingStdOutCallbackHandler(),
         ],
+        api_key=api_key,
     )
-    memory_llm = ChatOpenAI(
-        temperature=0.1,
-        openai_api_key=api_key,
-    )
-else:
-    st.warning("Please enter your OpenAI API Key.")
 
 def format_docs(docs):
     return "\n\n".join(document.page_content for document in docs)
@@ -273,7 +247,7 @@ def split_file(file):
     )
     loader = UnstructuredFileLoader(file_path)
     docs = loader.load_and_split(text_splitter=splitter)
-    embeddings = OpenAIEmbeddings(openai_api_key=api_key_input)
+    embeddings = OpenAIEmbeddings(api_key=api_key)
     cached_embeddings = CacheBackedEmbeddings.from_bytes_store(embeddings, cache_dir)
     vectorstore = FAISS.from_documents(docs, cached_embeddings)
     retriever = vectorstore.as_retriever()
