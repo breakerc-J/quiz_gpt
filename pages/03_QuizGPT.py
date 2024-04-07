@@ -67,6 +67,22 @@ memory_llm = ChatOpenAI(
         api_key=api_key,
     )
 
+if api_key:
+    llm = ChatOpenAI(
+        temperature=0.1,
+        api_key=api_key,
+        streaming=True,
+        callbacks=[
+            StreamingStdOutCallbackHandler(),
+        ],
+    )
+    memory_llm = ChatOpenAI(
+        temperature=0.1,
+        api_key=api_key,
+    )
+else:
+    st.warning("Please enter your OpenAI API Key.")
+
 def format_docs(docs):
     return "\n\n".join(document.page_content for document in docs)
 
