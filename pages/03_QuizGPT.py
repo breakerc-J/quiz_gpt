@@ -53,7 +53,7 @@ with st.sidebar:
 llm = ChatOpenAI(
     temperature=0.1,
     model="gpt-3.5-turbo-0125",
-    api_key=api_key,
+    openai_api_key=api_key,
     streaming=True,
     callbacks=[StreamingStdOutCallbackHandler()],
    )

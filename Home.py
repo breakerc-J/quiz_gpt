@@ -12,7 +12,7 @@ st.markdown(
 Welcome to my FullstackGPT Portfolio!
 And
 Please visit my Github :
-https://github.com/breakerc-J/chapter_one-bot
+https://github.com/breakerc-J/quiz_gpt.git
             
 Here are the apps I made:
             
