@@ -267,7 +267,6 @@ def wiki_search(term):
     return docs
 
 
-
 with st.sidebar:
     docs = None
     choice = st.selectbox(
@@ -342,7 +341,7 @@ else:
                         {
                             "index": index,
                             "correct": False,
-                            "feedback": "That's OK. Try Again!!",
+                            "feedback": "Oops. Try Again!!",
                         }
                     )
 
@@ -366,7 +365,7 @@ else:
                 "**:blue[SUBMIT]**"
                 if solved_count < generated_quiz_count
                 else (
-                    "**:blue[:100: MUY BIEN! CONGRAT!!]**"
+                    "**:yellow[:100: MUY BIEN! CONGRAT!!]**"
                     if correct_count == generated_quiz_count
                     else "**:blue[TRY AGAIN :)]**"
                 )
