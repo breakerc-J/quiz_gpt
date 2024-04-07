@@ -33,11 +33,6 @@ st.set_page_config(
 
 st.title("QuizGPT")
 
-with st.sidebar:
-    st.write(
-        "https://github.com/breakerc-J/chapter_one-bot/blob/main/pages/03_QuizGPT.py"
-    )
-
 api_key = st.session_state.get("api_key", "")
 
 with st.sidebar:
@@ -384,4 +379,9 @@ else:
                         for _ in range(10):
                             st.balloons()
 
+
+with st.sidebar:
+    st.write(
+        "https://github.com/breakerc-J/chapter_one-bot/blob/main/pages/03_QuizGPT.py"
+    )
    
