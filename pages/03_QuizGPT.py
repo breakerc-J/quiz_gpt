@@ -52,15 +52,20 @@ with st.sidebar:
         st.session_state["api_key"] = api_key
         st.rerun()
 
+memory_llm = None
 
 llm = ChatOpenAI(
     temperature=0.1,
     model="gpt-3.5-turbo-0125",
-    openai_api_key=api_key,
+    api_key=api_key,
     streaming=True,
     callbacks=[StreamingStdOutCallbackHandler()],
    )
 
+memory_llm = ChatOpenAI(
+        temperature=0.1,
+        api_key=api_key,
+    )
 
 def format_docs(docs):
     return "\n\n".join(document.page_content for document in docs)
