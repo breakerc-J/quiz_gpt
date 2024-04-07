@@ -57,20 +57,20 @@ memory_llm = None
 llm = ChatOpenAI(
     temperature=0.1,
     model="gpt-3.5-turbo-0125",
-    api_key=api_key,
+    aopenai_api_key=api_key,
     streaming=True,
     callbacks=[StreamingStdOutCallbackHandler()],
    )
 
 memory_llm = ChatOpenAI(
         temperature=0.1,
-        api_key=api_key,
+        openai_api_key=api_key,
     )
 
 if api_key:
     llm = ChatOpenAI(
         temperature=0.1,
-        api_key=api_key,
+        openai_api_key=api_key,
         streaming=True,
         callbacks=[
             StreamingStdOutCallbackHandler(),
@@ -78,7 +78,7 @@ if api_key:
     )
     memory_llm = ChatOpenAI(
         temperature=0.1,
-        api_key=api_key,
+        openai_api_key=api_key,
     )
 else:
     st.warning("Please enter your OpenAI API Key.")
