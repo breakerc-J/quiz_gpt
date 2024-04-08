@@ -382,6 +382,6 @@ else:
 
 with st.sidebar:
     st.write(
-        "https://github.com/breakerc-J/chapter_one-bot/blob/main/pages/03_QuizGPT.py"
+        "https://github.com/breakerc-J/quiz_gpt/blob/master/pages/03_QuizGPT.py"
     )
    

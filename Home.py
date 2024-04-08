@@ -17,9 +17,9 @@ https://github.com/breakerc-J/quiz_gpt.git
 Here are the apps I made:
             
 - [👍] [DocumentGPT](/DocumentGPT)
-- [👍 ] [PrivateGPT](/PrivateGPT)
-- [👍 ] [QuizGPT](/QuizGPT)
-- [ ] [SiteGPT](/SiteGPT)
+- [👍] [PrivateGPT](/PrivateGPT)
+- [👍] [QuizGPT](/QuizGPT)
+- [👍] [SiteGPT](/SiteGPT)
 - [ ] [MeetingGPT](/MeetingGPT)
 - [ ] [InvestorGPT](/InvestorGPT)
 """
